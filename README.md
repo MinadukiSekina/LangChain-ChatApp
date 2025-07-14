@@ -1,105 +1,185 @@
-# Python-Project-Template
+# LangChain ChatApp
 
 [![CI](https://github.com/mjun0812/python-project-template/actions/workflows/ci.yml/badge.svg)](https://github.com/mjun0812/python-project-template/actions/workflows/ci.yml)
 
-A simple modern Python project template.
+LangChainを使用した翻訳APIサービスです。Google Gemini AIを活用して翻訳機能を提供します。
 
-This repository is created by [mjun0812/python-copier-template](https://github.com/mjun0812/python-copier-template) using [copier](https://copier.readthedocs.io/).
+## 機能
 
-[Article](https://mjunya.com/en/posts/2025-06-15-python-template/) [日本語記事](https://zenn.dev/mjun0812/articles/0ae2325d40ed20)
+- 🌐 **翻訳API**: LangChainとGoogle Gemini AIを使用した高精度翻訳
+- 📦 **LangServe**: LangChainアプリケーションの簡単なデプロイ
+- 🐳 **Docker Support**: 完全なDocker開発環境
+- 📦 **Devcontainer Support**: VS Code devcontainer対応
+- ✨ **AI Editor Support**: [Cursor rules](https://docs.cursor.com/context/rules)と[CLAUDE.md](https://docs.anthropic.com/en/docs/claude-code/overview)対応
+- 📝 **Type Hints**: 完全な型注釈サポート
+- 🔍 **Code Quality**: Ruffによるリンティングとフォーマット
+- 🧪 **Testing**: pytestセットアップ
+- 🔧 **Pre-commit Hooks**: 自動コード品質チェック
+- 🏗️ **CI Ready**: GitHub Actionsワークフロー
 
-## Features
+## 技術スタック
 
-- 🚀 **Modern Python**: Support for Python 3.10-3.13
-- 📦 **uv Package Manager**: Fast and reliable package management with [uv](https://github.com/astral-sh/uv)
-- 🐳 **Docker Support**: Complete Docker development environment
-- 📦 **Devcontainer Support**: VS Code devcontainer for consistent development
-- ✨ **AI Editor Support**: [Cursor rules](https://docs.cursor.com/context/rules) and
-  [CLAUDE.md](https://docs.anthropic.com/en/docs/claude-code/overview) included for AI-powered development
-- 📝 **Type Hints**: Full type annotation support with modern Python features
-- 🔍 **Code Quality**: Pre-configured Ruff for linting and formatting
-- 🧪 **Testing**: pytest setup with example tests
-- 🔧 **Pre-commit Hooks**: Automated code quality checks
-- 🏗️ **CI Ready**: GitHub Actions workflows included
+- **Python 3.12+**
+- **LangChain**: AIアプリケーション開発フレームワーク
+- **LangServe**: LangChainアプリケーションのデプロイ
+- **Google Gemini AI**: 翻訳エンジン
+- **uv**: 高速Pythonパッケージマネージャー
 
-## Quick Start
+# Qiita
 
-### Pre-Requirements
+https://qiita.com/MinadukiSekina/items/cb1d15e74123a663d7dc
 
-- [uv](https://docs.astral.sh/uv/): Fast Python package installer
+## クイックスタート
 
-### Development Setup
+### 前提条件
+
+- [uv](https://docs.astral.sh/uv/): 高速Pythonパッケージインストーラー
+- Google Gemini AI APIキー
+
+### 環境設定
+
+1. 環境変数ファイルを作成:
+```bash
+cp .env.example .env
+```
+
+2. `.env`ファイルにGoogle Gemini AI APIキーを設定:
+```env
+GOOGLE_API_KEY=your_api_key_here
+```
+
+### ローカルで開発する場合のセットアップ
 
 ```bash
-# Install dependencies
+# 依存関係をインストール
 uv sync
 
-# Install pre-commit hooks
+# プリコミットフックをインストール
 uv run pre-commit install
 
-# Run tests
+# アプリケーションを起動
+uv run python src/chat_app/main.py
+
+# テストを実行
 uv run pytest
 
-# Run formatting and linting (automatically runs on commit)
+# フォーマットとリンティング（コミット時に自動実行）
 uv run ruff format .
 uv run ruff check .
-# Auto Fix
+# 自動修正
 uv run ruff check . --fix
 ```
 
-### Docker Development Setup
-
-The template includes a complete Docker setup:
+### Dockerで開発する場合セットアップ
 
 ```bash
-# create uv.lock file
+# uv.lockファイルを作成
 uv sync
 
-# use the provided scripts
+# 提供されたスクリプトを使用
 ./docker/build.sh
-./docker/run.sh # or./docker/run.sh (Command)
+./docker/run.sh # または ./docker/run.sh (コマンド)
 
-# Build and run with Docker Compose
+# Docker Composeでビルドと実行
 docker compose build
 docker compose up
 ```
 
-### VS Code Devcontainer
+### VS Code Devcontainerの場合のセットアップ
 
-Open the project in VS Code and use the "Reopen in Container" command for a fully configured development environment.
+VS Codeでプロジェクトを開き、"Reopen in Container"コマンドを使用して完全に設定された開発環境を利用できます。
 
-### Update Template
-
-Thit template is created by [mjun0812/python-copier-template](https://github.com/mjun0812/python-copier-template).
-You can apply update from it.
+## サーバーの起動
 
 ```bash
-cd your-project-name
-uvx copier update -A
+uv run src/chat_app/main.py
 ```
 
-## Project Structure
+## API エンドポイント
+
+### 翻訳API
+
+**POST** `/translate`
+
+テキストを翻訳します。
+
+**リクエスト例:**
+```json
+{
+  "input": {
+    "text": "Hello, world!",
+    "language": "日本語"
+  }
+}
+```
+
+**レスポンス例:**
+```json
+{
+  "output": "こんにちは、世界！"
+}
+```
+
+### Playground
+
+http://localhost:8000/translate/playground/
+
+## プロジェクト構造
 
 ```text
-your-project/
+LangChain-ChatApp/
 ├── src/
-│   └── your_project/          # Main package
-├── tests/                     # Test files
-├── docker/                    # Docker configuration
-├── compose.yml               # Docker Compose setup
-├── pyproject.toml            # Project configuration
-└── README.md                 # Project documentation
+│   └── chat_app/              # メインパッケージ
+│       ├── api/               # APIエンドポイント
+│       ├── chains/            # LangChainチェーン
+│       ├── models/            # AIモデル設定
+│       ├── prompts/           # プロンプトテンプレート
+│       ├── environment/       # 環境設定
+│       └── main.py            # アプリケーションエントリーポイント
+├── tests/                     # テストファイル
+├── docker/                    # Docker設定
+├── compose.yml               # Docker Compose設定
+├── pyproject.toml            # プロジェクト設定
+└── README.md                 # プロジェクトドキュメント
 ```
 
-## Q&A
+## 開発ガイドライン
 
-### Why don't you use a type checker?
+### パッケージ管理
+- uvのみを使用
+- インストール: `uv add package`
+- アップグレード: `uv add --dev package --upgrade-package package`
+- 禁止: `uv pip install`, `@latest`構文
 
-I'm waiting for stable release of [`ty`](https://github.com/astral-sh/ty).
-You can install and use your preferred type checker.
+### コード品質
+- すべてのコードに型ヒントが必要
+- 既存のパターンを正確に従う
+- ドキュメント文字列にはGoogleスタイルを使用
 
-## Support
+### テスト要件
+- フレームワーク: `uv run --frozen pytest`
+- カバレッジ: エッジケースとエラーをテスト
+- 新機能にはテストが必要
+- バグ修正には回帰テストが必要
 
-- 📖 [Copier Documentation](https://copier.readthedocs.io/)
+### Git
+- コミットメッセージはConventional Commitsスタイルに従う
+
+## コードフォーマットとリンティング
+
+### Ruff
+- フォーマット: `uv run --frozen ruff format .`
+- チェック: `uv run --frozen ruff check .`
+- 修正: `uv run --frozen ruff check . --fix`
+
+### Pre-commit
+- 設定: `.pre-commit-config.yaml`
+- 実行: git commit時
+- ツール: Ruff (Python)
+
+## サポート
+
+- 📖 [LangChain Documentation](https://python.langchain.com/)
+- 📖 [LangServe Documentation](https://python.langchain.com/docs/langserve)
 - 🐍 [uv Documentation](https://docs.astral.sh/uv/)
 - 🔍 [Ruff Documentation](https://docs.astral.sh/ruff/)
