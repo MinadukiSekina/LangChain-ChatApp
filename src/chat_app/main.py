@@ -2,6 +2,7 @@ import getpass
 import os
 
 from langchain.chat_models import init_chat_model
+from langchain_core.output_parsers import StrOutputParser
 from langchain_core.prompts import ChatPromptTemplate
 
 try:
@@ -34,6 +35,10 @@ prompt_template = ChatPromptTemplate.from_messages(
     [("system", system_template), ("user", "{text}")]
 )
 prompt = prompt_template.invoke({"language": "Japanese", "text": "hi!"})
-print(prompt)
+
 result = model.invoke(prompt)
-print(result)
+
+# 出力を文字列として取得するためのOutputParserをインスタンス化します。
+parser = StrOutputParser()
+parsed_result = parser.invoke(result)
+print(parsed_result)
