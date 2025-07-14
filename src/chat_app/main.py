@@ -34,11 +34,11 @@ system_template = "Translate the following from English into {language}"
 prompt_template = ChatPromptTemplate.from_messages(
     [("system", system_template), ("user", "{text}")]
 )
-prompt = prompt_template.invoke({"language": "Japanese", "text": "hi!"})
-
-result = model.invoke(prompt)
 
 # 出力を文字列として取得するためのOutputParserをインスタンス化します。
 parser = StrOutputParser()
-parsed_result = parser.invoke(result)
-print(parsed_result)
+
+chain = prompt_template | model | parser
+result = chain.invoke({"language": "Japanese", "text": "hi!"})
+
+print(result)
