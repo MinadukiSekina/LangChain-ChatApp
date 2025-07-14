@@ -44,7 +44,7 @@ cp .env.example .env
 GOOGLE_API_KEY=your_api_key_here
 ```
 
-### 開発セットアップ
+### ローカルで開発する場合のセットアップ
 
 ```bash
 # 依存関係をインストール
@@ -66,7 +66,7 @@ uv run ruff check .
 uv run ruff check . --fix
 ```
 
-### Docker開発セットアップ
+### Dockerで開発する場合セットアップ
 
 ```bash
 # uv.lockファイルを作成
@@ -81,9 +81,15 @@ docker compose build
 docker compose up
 ```
 
-### VS Code Devcontainer
+### VS Code Devcontainerの場合のセットアップ
 
 VS Codeでプロジェクトを開き、"Reopen in Container"コマンドを使用して完全に設定された開発環境を利用できます。
+
+## サーバーの起動
+
+```bash
+uv run src/chat_app/main.py
+```
 
 ## API エンドポイント
 
@@ -98,7 +104,7 @@ VS Codeでプロジェクトを開き、"Reopen in Container"コマンドを使�
 {
   "input": {
     "text": "Hello, world!",
-    "target_language": "日本語"
+    "language": "日本語"
   }
 }
 ```
@@ -109,6 +115,10 @@ VS Codeでプロジェクトを開き、"Reopen in Container"コマンドを使�
   "output": "こんにちは、世界！"
 }
 ```
+
+### Playground
+
+http://localhost:8000/translate/playground/
 
 ## プロジェクト構造
 
