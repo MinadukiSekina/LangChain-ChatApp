@@ -25,6 +25,10 @@ LangChainを使用した翻訳APIサービスです。Google Gemini AIを活用�
 - **Google Gemini AI**: 翻訳エンジン
 - **uv**: 高速Pythonパッケージマネージャー
 
+# Qiita
+
+https://qiita.com/MinadukiSekina/items/cb1d15e74123a663d7dc
+
 ## クイックスタート
 
 ### 前提条件
