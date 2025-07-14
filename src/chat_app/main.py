@@ -1,44 +1,18 @@
-import getpass
-import os
+from fastapi import FastAPI
 
-from langchain.chat_models import init_chat_model
-from langchain_core.output_parsers import StrOutputParser
-from langchain_core.prompts import ChatPromptTemplate
+from chat_app.api.translation_api import setup_translation_api
+from chat_app.environment.env_loader import load_env
 
-try:
-    # load environment variables from .env file (requires `python-dotenv`)
-    from dotenv import load_dotenv
+# 環境変数を読み込む
+load_env()
 
-    load_dotenv()
-except ImportError:
-    pass
+# FastAPIアプリケーションを作成
+app = FastAPI()
 
-os.environ["LANGSMITH_TRACING"] = "true"
-if "LANGSMITH_API_KEY" not in os.environ:
-    os.environ["LANGSMITH_API_KEY"] = getpass.getpass(
-        prompt="Enter your LangSmith API key (optional): "
-    )
-if "LANGSMITH_PROJECT" not in os.environ:
-    os.environ["LANGSMITH_PROJECT"] = getpass.getpass(
-        prompt='Enter your LangSmith Project Name (default = "default"): '
-    )
-    if not os.environ.get("LANGSMITH_PROJECT"):
-        os.environ["LANGSMITH_PROJECT"] = "default"
+# 翻訳APIのルーティングを設定
+setup_translation_api(app)
 
-if not os.environ.get("GOOGLE_API_KEY"):
-    os.environ["GOOGLE_API_KEY"] = getpass.getpass("Enter API key for Google Gemini: ")
+if __name__ == "__main__":
+    import uvicorn
 
-model = init_chat_model("gemini-2.0-flash", model_provider="google_genai")
-
-system_template = "Translate the following from English into {language}"
-prompt_template = ChatPromptTemplate.from_messages(
-    [("system", system_template), ("user", "{text}")]
-)
-
-# 出力を文字列として取得するためのOutputParserをインスタンス化します。
-parser = StrOutputParser()
-
-chain = prompt_template | model | parser
-result = chain.invoke({"language": "Japanese", "text": "hi!"})
-
-print(result)
+    uvicorn.run(app, host="0.0.0.0", port=8000)
