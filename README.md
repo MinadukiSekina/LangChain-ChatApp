@@ -1,6 +1,6 @@
 # LangChain ChatApp
 
-[![CI](https://github.com/mjun0812/python-project-template/actions/workflows/ci.yml/badge.svg)](https://github.com/mjun0812/python-project-template/actions/workflows/ci.yml)
+[![CI](https://github.com/MinadukiSekina/LangChain-ChatApp/actions/workflows/ci.yml/badge.svg)](https://github.com/MinadukiSekina/LangChain-ChatApp/actions/workflows/ci.yml)
 
 LangChainを使用した翻訳APIサービスです。Google Gemini AIを活用して翻訳機能を提供します。
 
@@ -10,7 +10,7 @@ LangChainを使用した翻訳APIサービスです。Google Gemini AIを活用�
 - 📦 **LangServe**: LangChainアプリケーションの簡単なデプロイ
 - 🐳 **Docker Support**: 完全なDocker開発環境
 - 📦 **Devcontainer Support**: VS Code devcontainer対応
-- ✨ **AI Editor Support**: [Cursor rules](https://docs.cursor.com/context/rules)と[CLAUDE.md](https://docs.anthropic.com/en/docs/claude-code/overview)対応
+- ✨ **AI Editor Support**: [Cursor rules](https://docs.cursor.com/context/rules)と[CLAUDE.md](https://docs.anthropic.com/en/docs/claude-code/overview)対応。[Claude Codeのルール](.claude/settings.json)もあり
 - 📝 **Type Hints**: 完全な型注釈サポート
 - 🔍 **Code Quality**: Ruffによるリンティングとフォーマット
 - 🧪 **Testing**: pytestセットアップ
